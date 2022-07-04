@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 
 app.use(express.static(path.resolve(__dirname, '../../client/build')));
 
-app.get('*', (req: Request, res: Response) => {
+app.get('*', (_req: Request, res: Response) => {
   res.status(404).end();
 });
 
