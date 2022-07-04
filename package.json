@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node server/index.js",
     "dev": "nodemon server/index.js",
-    "test": "npm run test --prefix ./client && npm run test --prefix ./server",
+    "test": "npm run lint && npm run test --prefix ./client && npm run test --prefix ./server",
     "build": "npm ci --prefix ./client && npm run lint-fix && npm run build --prefix ./client",
     "lint": "eslint . --ignore-path .gitignore && prettier --ignore-path .gitignore -c \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
     "lint-fix": "eslint . --ignore-path .gitignore --fix && prettier --ignore-path .gitignore --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
