@@ -1,4 +1,5 @@
 {
+  "root": true,
   "env": {
     "es2022": true
   },
@@ -19,6 +20,6 @@
     "handle-callback-err": "off",
     "consistent-return": "off",
     "sonarjs/no-duplicate-string": "off",
-    "react/prop-types": ["off"]
+    "no-unused-vars": "warn"
   }
 }

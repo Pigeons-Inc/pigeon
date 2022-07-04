@@ -6,12 +6,12 @@
   "type": "module",
   "root": true,
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "nodemon server/index.js",
+    "start": "npm run start --prefix ./server",
+    "dev": "npm run dev --prefix ./server",
     "test": "npm run lint && npm run test --prefix ./client && npm run test --prefix ./server",
-    "build": "npm ci --prefix ./client && npm run lint-fix && npm run build --prefix ./client",
-    "lint": "eslint --ext .jsx --ext .js . --ignore-path .gitignore && prettier --ignore-path .gitignore -c \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
-    "lint-fix": "eslint --ext .jsx --ext .js . --ignore-path .gitignore --fix && prettier --ignore-path .gitignore --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
+    "build": "npm ci --prefix ./client && npm ci --prefix ./server && npm run lint-fix && npm run build --prefix ./client && npm run build --prefix ./server",
+    "lint": "eslint --ext .jsx --ext .js --ext .ts . --ignore-path .gitignore && prettier --ignore-path .gitignore -c \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
+    "lint-fix": "eslint --ext .jsx --ext .js --ext .ts . --ignore-path .gitignore --fix && prettier --ignore-path .gitignore --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
     "prepare": "husky install"
   },
   "repository": {
