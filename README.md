@@ -1,1 +1,2 @@
 # pigeon
+Simple messenger application
