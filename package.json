@@ -1,0 +1,38 @@
+{
+  "name": "pigeon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "root": true,
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "test": "npm run lint && npm run test --prefix ./client && npm run test --prefix ./server",
+    "build": "npm ci --prefix ./client && npm run lint-fix && npm run build --prefix ./client",
+    "lint": "eslint --ext .jsx --ext .js . --ignore-path .gitignore && prettier --ignore-path .gitignore -c \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
+    "lint-fix": "eslint --ext .jsx --ext .js . --ignore-path .gitignore --fix && prettier --ignore-path .gitignore --write \"**/*.js\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
+    "prepare": "husky install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pigeons-Inc/pigeon.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Pigeons-Inc/pigeon/issues"
+  },
+  "homepage": "https://github.com/Pigeons-Inc/pigeon#readme",
+  "devDependencies": {
+    "eslint": "^8.19.0",
+    "eslint-config-metarhia": "^8.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-sonarjs": "^0.13.0",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1"
+  }
+}
