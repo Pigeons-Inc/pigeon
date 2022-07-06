@@ -1,5 +1,5 @@
 import { Router as createRouter } from 'express';
-import PingController from '../controllers/ping';
+import PingController from '../controllers/PingController';
 const router = createRouter();
 
 router.get('/ping', async (_req, res) => {
