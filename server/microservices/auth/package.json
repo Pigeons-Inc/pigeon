@@ -1,12 +1,13 @@
 {
-  "name": "server",
+  "name": "auth",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "concurrently \"npm run build-watch --prefix ./microservices/gateway\" \"npm run build-watch --prefix ./microservices/auth\" \"nodemon -q index.js\"",
-    "build": "npm run build --prefix ./microservices/gateway && npm run build --prefix ./microservices/auth",
+    "start": "node build/index.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\"",
+    "build": "npx tsc",
+    "build-watch": "npx tsc -w",
     "test": "npm run lint",
     "lint": "eslint --ext .ts . --ignore-path ../.gitignore && prettier --ignore-path ../.gitignore -c \"**/*.js\" \"**/*.json\"",
     "lint-fix": "eslint --ext .ts . --ignore-path ../.gitignore --fix && prettier --ignore-path ../.gitignore --write \"**/*.js\" \"**/*.json\""
@@ -22,5 +23,9 @@
     "concurrently": "^7.2.2",
     "nodemon": "^2.0.18",
     "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1"
   }
 }
