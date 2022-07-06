@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "concurrently \"npm run build-watch --prefix ./microservices/gateway\" \"npm run build-watch --prefix ./microservices/auth\" \"nodemon -q index.js\"",
-    "build": "npm run build --prefix ./microservices/gateway && npm run build --prefix ./microservices/auth",
+    "build": "npm ci --prefix ./microservices/gateway && npm ci --prefix ./microservices/auth && npm run build --prefix ./microservices/gateway && npm run build --prefix ./microservices/auth",
     "test": "exit 0"
   },
   "keywords": [],
