@@ -1,14 +1,14 @@
 import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import findConfig from 'find-config';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: findConfig('.env') ?? undefined });
 import path from 'path';
 import router from './routes/index';
 import swaggerUi from 'swagger-ui-express';
 
-dotenv.config();
-
 const app: Express = express();
 app.disable('x-powered-by');
-const port = process.env.PORT || 3000;
+const port = process.env.API_PORT || 3000;
 
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, 'public')));
