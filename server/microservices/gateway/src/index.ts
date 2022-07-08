@@ -8,7 +8,7 @@ import swaggerUi from 'swagger-ui-express';
 
 const app: Express = express();
 app.disable('x-powered-by');
-const port = process.env.API_PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.static(path.resolve(__dirname, 'public')));
