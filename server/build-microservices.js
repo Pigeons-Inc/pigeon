@@ -13,13 +13,11 @@ const execCallback = (err, _stdout, stderr) => {
   }
 };
 
-if (dev) {
-  for (const microservice of microservices) {
+for (const microservice of microservices) {
+  if (dev) {
     const mPath = path.resolve(__dirname, workDir, microservice);
     exec('npm run build-watch --prefix ' + mPath, execCallback);
-  }
-} else {
-  for (const microservice of microservices) {
+  } else {
     process.stdout.write(`Building ${microservice}...`);
     const mPath = path.resolve(__dirname, workDir, microservice);
     execSync(
