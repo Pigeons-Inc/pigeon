@@ -1,9 +1,20 @@
 import { Router as createRouter } from 'express';
-import PingController from '../controllers/PingController';
+import swaggerUi from 'swagger-ui-express';
+import auth from './auth';
+import ping from './ping';
 const router = createRouter();
 
-router.get('/ping', async (_req, res) => {
-  res.json(await PingController.getMessage());
-});
+router.use(
+  '/docs',
+  swaggerUi.serve,
+  swaggerUi.setup(undefined, {
+    swaggerOptions: {
+      url: '/swagger.json',
+    },
+  })
+);
+
+router.get('/ping', ping);
+router.all('/auth*', auth);
 
 export default router;

@@ -1,9 +1,14 @@
 import { Get, Route } from 'tsoa';
 
-@Route('/ping')
+interface IPingResponse {
+  message: 'pong';
+}
+
+@Route('/api/ping')
 export default class PingController {
   @Get('/')
   public static async getMessage() {
-    return { message: 'pong' };
+    const response: IPingResponse = { message: 'pong' };
+    return response;
   }
 }

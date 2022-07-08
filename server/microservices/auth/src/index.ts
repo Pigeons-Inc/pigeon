@@ -7,8 +7,8 @@ const app: Express = express();
 app.disable('x-powered-by');
 const port = process.env.PORT || 3001;
 
-app.get('/', (_req: Request, res: Response) => {
-  res.status(200).json({ message: 'Welcome to auth service!' });
+app.get('/', (req: Request, res: Response) => {
+  res.json({ message: 'Hello World!' });
 });
 
 app.get('*', (_req: Request, res: Response) => {

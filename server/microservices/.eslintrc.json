@@ -13,6 +13,6 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "new-cap": ["error", { "capIsNewExceptions": ["Get", "Route"] }]
+    "new-cap": ["error", { "capIsNewExceptions": ["Get", "Post", "Route"] }]
   }
 }
