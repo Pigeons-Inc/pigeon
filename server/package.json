@@ -4,12 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q build/index.js\"",
-    "build": "npx tsc",
-    "test": "npm run lint",
-    "lint": "eslint --ext .ts . --ignore-path ../.gitignore && prettier --ignore-path ../.gitignore -c \"**/*.js\" \"**/*.json\"",
-    "lint-fix": "eslint --ext .ts . --ignore-path ../.gitignore --fix && prettier --ignore-path ../.gitignore --write \"**/*.js\" \"**/*.json\""
+    "start": "node index.js",
+    "dev": "concurrently \"node build-microservices.js -d\" \"nodemon index.js\"",
+    "build": "node build-microservices.js",
+    "test": "exit 0"
   },
   "keywords": [],
   "author": "",
@@ -22,9 +20,5 @@
     "concurrently": "^7.2.2",
     "nodemon": "^2.0.18",
     "typescript": "^4.7.4"
-  },
-  "dependencies": {
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1"
   }
 }

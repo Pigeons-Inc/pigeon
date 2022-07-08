@@ -13,10 +13,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false --passWithNoTests && npm run lint",
-    "eject": "react-scripts eject",
-    "lint": "eslint --ext .jsx --ext .js . --ignore-path ../.gitignore && prettier --ignore-path ../.gitignore -c \"**/*.js\" \"**/*.json\" \"**/*.md\"",
-    "lint-fix": "eslint --ext .jsx --ext .js . --ignore-path ../.gitignore --fix && prettier --ignore-path ../.gitignore --write \"**/*.js\" \"**/*.json\" \"**/*.md\""
+    "test": "react-scripts test --watchAll=false --passWithNoTests",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

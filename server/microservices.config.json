@@ -1,0 +1,4 @@
+{
+  "workDir": "./microservices",
+  "microservices": ["gateway", "auth"]
+}
