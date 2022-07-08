@@ -1,5 +1,7 @@
+const { workDir, microservices } = require('./microservices.config.json');
 const { fork } = require('child_process');
 const path = require('path');
 
-fork(path.resolve(__dirname, './microservices/gateway/build/index.js'));
-fork(path.resolve(__dirname, './microservices/auth/build/index.js'));
+for (const microservice of microservices) {
+  fork(path.resolve(__dirname, workDir, microservice, './build'));
+}
