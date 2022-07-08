@@ -31,6 +31,7 @@
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "find-config": "^1.0.0",
     "swagger-ui-express": "^4.4.0",
     "tsoa": "^4.1.0"
   }

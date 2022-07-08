@@ -1,10 +1,9 @@
 import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
 import path from 'path';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 import router from './routes/index';
 import swaggerUi from 'swagger-ui-express';
-
-dotenv.config();
 
 const app: Express = express();
 app.disable('x-powered-by');
