@@ -22,7 +22,6 @@ export default class AuthController {
       });
       if (!data || status < 200 || status >= 300)
         throw new ApiError('Auth error', status, [data]);
-      res.status(status);
       return data;
     } catch (e) {
       next(e);
