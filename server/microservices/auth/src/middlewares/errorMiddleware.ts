@@ -1,5 +1,6 @@
 import ApiError from '../models/exceptions/ApiError';
 import { NextFunction, Request, Response } from 'express';
+import ErrorResponse from '../models/interfaces/ErrorResponse';
 
 export default (
   err: Error,
@@ -16,5 +17,6 @@ export default (
     statusCode = err.code;
     errors = err.errors;
   }
-  res.status(statusCode).json({ message, errors });
+  const errorResonse: ErrorResponse = { message, errors };
+  res.status(statusCode).json(errorResonse);
 };

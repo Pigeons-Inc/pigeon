@@ -1,5 +1,4 @@
 import TokenService from './TokenService';
-import db from '../repository/db';
 import User from '../models/sequelize/User';
 import bcrypt from 'bcrypt';
 import ApiError from '../models/exceptions/ApiError';
@@ -7,41 +6,22 @@ import UserDTO from '../models/interfaces/UserDTO';
 import TokenStore from '../models/sequelize/TokenStore';
 
 export default class AuthService {
-  private tokenService: TokenService;
-  constructor() {
-    this.tokenService = new TokenService();
-    db.sync();
-  }
-
+  private tokenService: TokenService = new TokenService();
   public async register(email: string, password: string) {
-    try {
-      const hash = await bcrypt.hash(
-        password,
-        <string>process.env.PASSWORD_SALT
-      );
-      const user = await User.create({ email, hash, isActivated: false });
-      return this.tokenService.generateTokens(user);
-    } catch (e) {
-      throw ApiError.unauthorized(<Error>e);
-    }
+    const hash = await bcrypt.hash(password, <string>process.env.PASSWORD_SALT);
+    const user = await User.create({ email, hash, isActivated: false });
+    return this.tokenService.generateTokens(user);
   }
 
   public async login(email: string, password: string) {
-    try {
-      const hash = await bcrypt.hash(
-        password,
-        <string>process.env.PASSWORD_SALT
-      );
-      const user = await User.findOne({ where: { email, hash } });
-      if (!user) throw ApiError.unauthorized('Invalid email or password');
-      return this.tokenService.generateTokens(user);
-    } catch (e) {
-      throw ApiError.unauthorized(<Error>e);
-    }
+    const hash = await bcrypt.hash(password, <string>process.env.PASSWORD_SALT);
+    const user = await User.findOne({ where: { email, hash } });
+    if (!user) throw ApiError.unauthorized('Invalid email or password');
+    return this.tokenService.generateTokens(user);
   }
 
   public async logout(token: string) {
-    if (!token) throw ApiError.unauthorized('No token in cookies found');
+    if (!token) throw ApiError.badRequest('No token in cookies found');
     const decoded = this.tokenService.decodeToken<UserDTO>(token);
     await TokenStore.destroy({ where: { id: decoded.id } });
   }
@@ -56,11 +36,13 @@ export default class AuthService {
       where: { id: decoded.id, email: decoded.email, hash: decoded.hash },
     });
     if (!userInDB) throw ApiError.unauthorized('Invalid token');
+    if (!userInDB.isActivated)
+      throw ApiError.unauthorized('User is not activated yet');
     return decoded;
   }
 
   public async refresh(token: string) {
-    if (!token) throw ApiError.unauthorized('No token in cookies found');
+    if (!token) throw ApiError.badRequest('No token in cookies found');
     const decoded = await this.validate(token, true);
     return this.tokenService.generateTokens(decoded);
   }
