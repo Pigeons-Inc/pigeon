@@ -33,7 +33,8 @@ export default class AuthController {
   }
 
   @Get('/validate')
-  public async validate(@Header('authorization') token: string) {
+  public async validate(@Header('authorization') authorization = '') {
+    const token = authorization?.split(' ')[1];
     await this.authService.validate(token);
   }
 

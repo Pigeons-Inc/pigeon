@@ -9,13 +9,17 @@ export default class TokenService {
     const payload = { id: user.id, email: user.email, hash: user.hash };
     const accessToken = jwt.sign(
       payload,
-      process.env.ACCESS_TOKEN_SECRET || 'access_secret',
-      { expiresIn: '30m' }
+      <string>process.env.ACCESS_TOKEN_SECRET,
+      {
+        expiresIn: '30m',
+      }
     );
     const refreshToken = jwt.sign(
       payload,
-      process.env.REFRESH_TOKEN_SECRET || 'refresh_secret',
-      { expiresIn: '30d' }
+      <string>process.env.REFRESH_TOKEN_SECRET,
+      {
+        expiresIn: '30d',
+      }
     );
 
     const finded = await TokenStore.findOne({ where: { id: user.id } });
@@ -35,7 +39,7 @@ export default class TokenService {
     try {
       return <T>jwt.verify(token, secret);
     } catch (e) {
-      throw ApiError.unauthorized('Token has expired');
+      throw ApiError.unauthorized('Token has expired or is not valid');
     }
   }
 }

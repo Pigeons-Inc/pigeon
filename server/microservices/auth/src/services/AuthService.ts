@@ -1,7 +1,7 @@
 import TokenService from './TokenService';
 import db from '../repository/db';
 import User from '../models/sequelize/User';
-import { createHmac } from 'crypto';
+import bcrypt from 'bcrypt';
 import ApiError from '../models/exceptions/ApiError';
 import UserDTO from '../models/interfaces/UserDTO';
 import TokenStore from '../models/sequelize/TokenStore';
@@ -15,9 +15,10 @@ export default class AuthService {
 
   public async register(email: string, password: string) {
     try {
-      const hash = createHmac('sha256', process.env.PASSWORD_SECRET || 'secret')
-        .update(password)
-        .digest('hex');
+      const hash = await bcrypt.hash(
+        password,
+        <string>process.env.PASSWORD_SALT
+      );
       const user = await User.create({ email, hash, isActivated: false });
       return this.tokenService.generateTokens(user);
     } catch (e) {
@@ -27,9 +28,10 @@ export default class AuthService {
 
   public async login(email: string, password: string) {
     try {
-      const hash = createHmac('sha256', process.env.PASSWORD_SECRET || 'secret')
-        .update(password)
-        .digest('hex');
+      const hash = await bcrypt.hash(
+        password,
+        <string>process.env.PASSWORD_SALT
+      );
       const user = await User.findOne({ where: { email, hash } });
       if (!user) throw ApiError.unauthorized('Invalid email or password');
       return this.tokenService.generateTokens(user);
@@ -45,9 +47,10 @@ export default class AuthService {
   }
 
   public async validate(token: string, isRefreshToken = false) {
+    if (!token) throw ApiError.unauthorized('No token provided');
     const secret = isRefreshToken
-      ? process.env.REFRESH_TOKEN_SECRET || 'refresh_secret'
-      : process.env.ACCESS_TOKEN_SECRET || 'access_secret';
+      ? <string>process.env.REFRESH_TOKEN_SECRET
+      : <string>process.env.ACCESS_TOKEN_SECRET;
     const decoded = this.tokenService.validateToken<UserDTO>(token, secret);
     const userInDB = await User.findOne({
       where: { id: decoded.id, email: decoded.email, hash: decoded.hash },
