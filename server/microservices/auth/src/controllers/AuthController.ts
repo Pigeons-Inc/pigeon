@@ -14,17 +14,19 @@ import {
 import AuthService from '../services/AuthService';
 import cookie from 'cookie';
 import ErrorResponse from '../models/interfaces/ErrorResponse';
-
-interface BodyProps {
-  email: string;
-  password: string;
-}
+import BodyProps from '../models/interfaces/BodyProps';
+import PongResponse from '../models/interfaces/PongResponse';
 
 @Route('/')
 export class AuthController extends Controller {
   private authService: AuthService = new AuthService();
   constructor() {
     super();
+  }
+
+  @Get('/ping')
+  public async ping() {
+    return <PongResponse>{ message: 'pong' };
   }
 
   @Post('/register')

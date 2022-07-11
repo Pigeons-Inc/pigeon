@@ -1,6 +1,6 @@
 import ApiError from '../models/exceptions/ApiError';
 import { NextFunction, Request, Response } from 'express';
-import { AxiosError } from 'axios';
+import ErrorResponse from '../models/interfaces/ErrorResponse';
 
 export default (
   err: Error,
@@ -17,10 +17,6 @@ export default (
     statusCode = err.code;
     errors = err.errors;
   }
-  if (err instanceof AxiosError) {
-    message = err.message;
-    statusCode = err.response?.status || 500;
-    errors = [err];
-  }
-  res.status(statusCode).json({ message, errors });
+  const errorResonse: ErrorResponse = { message, errors };
+  res.status(statusCode).json(errorResonse);
 };
