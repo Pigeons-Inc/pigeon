@@ -1,9 +1,9 @@
 import { DataTypes } from 'sequelize';
-import TokenStore from '../interfaces/TokenStore';
-import db from '../../repository/db';
+import ITokenStore from '../interfaces/TokenStore';
+import db from '../../repository/sequelize';
 import User from './User';
 
-const TokenStore = db.define<TokenStore>('TokenStore', {
+const TokenStore = db.define<ITokenStore>('TokenStore', {
   id: {
     primaryKey: true,
     type: DataTypes.UUID,

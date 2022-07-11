@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
-import User from '../interfaces/User';
-import db from '../../repository/db';
+import IUser from '../interfaces/User';
+import db from '../../repository/sequelize';
 
-const User = db.define<User>('User', {
+const User = db.define<IUser>('User', {
   id: {
     primaryKey: true,
     type: DataTypes.UUID,

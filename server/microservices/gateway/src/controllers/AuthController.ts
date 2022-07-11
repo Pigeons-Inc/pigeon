@@ -7,7 +7,7 @@ import getRequestMethod from '../utils/getRequestMethod';
 export default class AuthController {
   public static async sendRequest(
     req: Request,
-    res: Response,
+    _res: Response,
     next: NextFunction
   ) {
     try {
