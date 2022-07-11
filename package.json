@@ -10,8 +10,8 @@
     "dev": "npm run dev --prefix ./server",
     "test": "npm run lint && npm run test --prefix ./client && npm run test --prefix ./server",
     "build": "npm ci --prefix ./client && npm ci --prefix ./server && npm run build --prefix ./client && npm run build --prefix ./server",
-    "lint": "eslint --ext .jsx --ext .js --ext .ts . --ignore-path .gitignore && prettier --ignore-path .gitignore -c \"**/*.js\" \"**/*.ts\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
-    "lint-fix": "eslint --ext .jsx --ext .js --ext .ts . --ignore-path .gitignore --fix && prettier --ignore-path .gitignore --write \"**/*.js\" \"**/*.ts\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
+    "lint": "eslint --ext .jsx --ext .js --ext .ts . --ignore-path .gitignore && prettier --ignore-path .gitignore -c \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
+    "lint-fix": "eslint --ext .jsx --ext .js --ext .ts . --ignore-path .gitignore --fix && prettier --ignore-path .gitignore --write \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.json\" \"**/*.md\" \"**/*.yml\"",
     "prepare": "husky install"
   },
   "repository": {

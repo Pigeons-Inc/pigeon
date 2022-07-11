@@ -4,10 +4,13 @@ import bcrypt from 'bcrypt';
 import ApiError from '../models/exceptions/ApiError';
 import UserDTO from '../models/interfaces/UserDTO';
 import TokenStore from '../models/sequelize/TokenStore';
+import Validator from '../utils/Validator';
 
 export default class AuthService {
   private tokenService: TokenService = new TokenService();
   public async register(email: string, password: string) {
+    const validator = new Validator();
+    validator.validateEmail(email).validatePassword(password).submit();
     const hash = await bcrypt.hash(password, <string>process.env.PASSWORD_SALT);
     const user = await User.create({ email, hash, isActivated: false });
     return this.tokenService.generateTokens(user);

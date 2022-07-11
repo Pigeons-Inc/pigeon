@@ -31,6 +31,7 @@ export class AuthController extends Controller {
 
   @Post('/register')
   @SuccessResponse(200, 'OK')
+  @Response<ErrorResponse>('400', 'Bad request')
   @Response<ErrorResponse>('401', 'Unauthorized')
   @Response<ErrorResponse>('500', 'Unexpected error')
   public async register(@Body() body: BodyProps) {

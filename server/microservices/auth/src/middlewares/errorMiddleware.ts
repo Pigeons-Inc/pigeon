@@ -1,6 +1,7 @@
 import ApiError from '../models/exceptions/ApiError';
 import { NextFunction, Request, Response } from 'express';
 import ErrorResponse from '../models/interfaces/ErrorResponse';
+import { ValidationError } from 'sequelize';
 
 export default (
   err: Error,
@@ -17,6 +18,16 @@ export default (
     statusCode = err.code;
     errors = err.errors;
   }
+
+  if (err instanceof ValidationError) {
+    message = err.message;
+    statusCode = 400;
+    errors = err.errors.map((error) => ({
+      name: 'Validation error: ' + error.path || '',
+      message: error.message,
+    }));
+  }
+
   const errorResonse: ErrorResponse = { message, errors };
   res.status(statusCode).json(errorResonse);
 };

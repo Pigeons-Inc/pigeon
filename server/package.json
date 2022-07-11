@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "concurrently \"node build-microservices.js -d\" \"nodemon index.js\"",
-    "build": "node build-microservices.js",
-    "test": "exit 0"
+    "dev": "concurrently \"node buildMicroservices.js -d\" \"nodemon index.js\"",
+    "build": "node buildMicroservices.js",
+    "test": "node runTests.js"
   },
   "keywords": [],
   "author": "",
