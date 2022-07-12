@@ -1,7 +1,7 @@
 import request from 'supertest';
-import db from '../repository/sequelize';
-import app from '../app';
-import User from '../models/sequelize/User';
+import db from '../src/repository/sequelize';
+import app from '../src/app';
+import User from '../src/models/sequelize/User';
 
 beforeAll(async () => {
   await db.sync();
