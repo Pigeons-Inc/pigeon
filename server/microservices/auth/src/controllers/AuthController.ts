@@ -45,6 +45,7 @@ export class AuthController extends Controller {
       cookie.serialize('refreshToken', refreshToken, {
         httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
+        path: '/api',
       })
     );
     return accessToken;
@@ -65,6 +66,7 @@ export class AuthController extends Controller {
       cookie.serialize('refreshToken', refreshToken, {
         httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
+        path: '/api',
       })
     );
     return accessToken;
@@ -81,6 +83,7 @@ export class AuthController extends Controller {
       cookie.serialize('refreshToken', '', {
         httpOnly: true,
         maxAge: 0,
+        path: '/api',
       })
     );
   }
@@ -107,6 +110,7 @@ export class AuthController extends Controller {
       cookie.serialize('refreshToken', refreshToken, {
         httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
+        path: '/api',
       })
     );
     return accessToken;
