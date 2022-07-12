@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import IUser from '../interfaces/User';
 import db from '../../repository/sequelize';
+import TokenStore from './TokenStore';
 
 const User = db.define<IUser>('User', {
   id: {
@@ -25,5 +26,7 @@ const User = db.define<IUser>('User', {
     type: DataTypes.BOOLEAN,
   },
 });
+
+User.hasOne(TokenStore);
 
 export default User;

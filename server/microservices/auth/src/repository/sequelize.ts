@@ -20,6 +20,6 @@ sequelize
     );
   })
   .catch((err) => {
-    throw new Error('Unable to connect to the database:', err);
+    throw new Error('Unable to connect to the database:' + err);
   });
 export default sequelize;

@@ -23,7 +23,7 @@ const shutdown = (server: Server) => () => {
   setTimeout(() => connections.forEach((curr) => curr.destroy()), 5000);
 };
 
-db.sync().then(() => {
+db.sync({ logging: false }).then(() => {
   const server = app.listen(port, () => {
     console.log(`Auth service is running at http://localhost:${port}`);
   });
