@@ -14,12 +14,14 @@ const sequelize = new Sequelize(databaseName, username, password, {
 
 sequelize
   .authenticate()
-  .then(() =>
+  .then(async () => {
     console.log(
       'Connection to auth database has been established successfully.'
-    )
-  )
-  .catch((err) => console.error('Unable to connect to the database:', err));
-sequelize.sync();
+    );
+    await sequelize.sync();
+  })
+  .catch((err) => {
+    throw new Error('Unable to connect to the database:', err);
+  });
 
 export default sequelize;
