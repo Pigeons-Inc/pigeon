@@ -4,7 +4,6 @@ import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import errorMiddleware from './middlewares/errorMiddleware';
 import { RegisterRoutes as registerRoutes } from './routes/routes';
-import db from './repository/sequelize';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 if (!process.env.PASSWORD_SALT) throw new Error('PASSWORD_SALT is not defined');
 if (!process.env.ACCESS_TOKEN_SECRET)
@@ -34,8 +33,4 @@ app.get('*', async (_req: Request, res: Response) => {
   res.status(404).end();
 });
 
-export default new Promise<Express>((resolve) => {
-  db.sync({ logging: false }).then(() => {
-    resolve(app);
-  });
-});
+export default app;
