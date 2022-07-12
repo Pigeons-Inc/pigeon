@@ -29,7 +29,7 @@ export class AuthController extends Controller {
     return <PongResponse>{ message: 'pong' };
   }
 
-  @Get('/validateCredentials')
+  @Post('/validateCredentials')
   @SuccessResponse(200, 'OK')
   @Response<ErrorResponse>('400', 'Bad request')
   public async validateCredentials(@Body() body: BodyProps) {

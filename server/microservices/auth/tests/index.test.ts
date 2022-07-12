@@ -60,6 +60,23 @@ describe('POST /login', () => {
   });
 });
 
+describe('POST /validateCredentials', () => {
+  it('should return 200 OK for valid email and password', async () => {
+    const res = await request(app)
+      .post('/validateCredentials')
+      .send({ email: 'example@example.com', password: 'password123S!' });
+    expect(res.statusCode).toEqual(200);
+  });
+
+  it('should return 400 Bad request for invalid email and/or password', async () => {
+    const res = await request(app)
+      .post('/validateCredentials')
+      .send({ email: 'example', password: 'password' });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+});
+
 afterAll(async () => {
   await User.destroy({
     where: { email: 'example@example.com' },
