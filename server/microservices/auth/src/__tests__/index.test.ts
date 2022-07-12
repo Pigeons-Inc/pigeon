@@ -12,7 +12,7 @@ describe('POST /register', () => {
     const res = await request(app)
       .post('/register')
       .send({ email: 'example@example.com', password: 'password123S!' });
-    console.log(res.body);
+    expect(res.body).toEqual(expect.any(String));
     expect(res.statusCode).toEqual(200);
   });
 
