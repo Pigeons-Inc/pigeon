@@ -29,6 +29,14 @@ export class AuthController extends Controller {
     return <PongResponse>{ message: 'pong' };
   }
 
+  @Get('/validateCredentials')
+  @SuccessResponse(200, 'OK')
+  @Response<ErrorResponse>('400', 'Bad request')
+  public async validateCredentials(@Body() body: BodyProps) {
+    const { email, password } = body;
+    await this.authService.validateCredentials(email, password);
+  }
+
   @Post('/register')
   @SuccessResponse(200, 'OK')
   @Response<ErrorResponse>('400', 'Bad request')
@@ -53,6 +61,7 @@ export class AuthController extends Controller {
 
   @Post('/login')
   @SuccessResponse(200, 'OK')
+  @Response<ErrorResponse>('400', 'Bad request')
   @Response<ErrorResponse>('401', 'Unauthorized')
   @Response<ErrorResponse>('500', 'Unexpected error')
   public async login(@Body() body: BodyProps) {

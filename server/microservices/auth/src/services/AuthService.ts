@@ -8,15 +8,21 @@ import Validator from '../utils/Validator';
 
 export default class AuthService {
   private tokenService: TokenService = new TokenService();
-  public async register(email: string, password: string) {
+
+  public async validateCredentials(email: string, password: string) {
     const validator = new Validator();
     validator.validateEmail(email).validatePassword(password).submit();
+  }
+
+  public async register(email: string, password: string) {
+    await this.validateCredentials(email, password);
     const hash = await bcrypt.hash(password, <string>process.env.PASSWORD_SALT);
     const user = await User.create({ email, hash, isActivated: false });
     return this.tokenService.generateTokens(user);
   }
 
   public async login(email: string, password: string) {
+    await this.validateCredentials(email, password);
     const hash = await bcrypt.hash(password, <string>process.env.PASSWORD_SALT);
     const user = await User.findOne({ where: { email, hash } });
     if (!user) throw ApiError.unauthorized('Invalid email or password');

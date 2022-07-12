@@ -5,7 +5,6 @@ export default class Validator {
   public validateEmail(email: string) {
     if (!email) this.errors.push('No email provided');
     if (email.length > 255) this.errors.push('Email is too long');
-    if (email.search(/@/) === -1) this.errors.push('Email must contain @');
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       this.errors.push('Invalid email');
     return this;

@@ -7,12 +7,20 @@ beforeAll(async () => {
   await db.sync({ logging: false });
 });
 
+describe('GET /ping', () => {
+  it('should return 200', async () => {
+    const res = await request(app).get('/ping');
+    expect(res.statusCode).toBe(200);
+  });
+});
+
 describe('POST /register', () => {
-  it('should return 200 OK for valid email and password', async () => {
+  it('should return 200 OK for valid email and password with tokens in body and cookie', async () => {
     const res = await request(app)
       .post('/register')
       .send({ email: 'example@example.com', password: 'password123S!' });
     expect(res.body).toEqual(expect.any(String));
+    expect(res.headers['set-cookie']).toBeDefined();
     expect(res.statusCode).toEqual(200);
   });
 
@@ -21,6 +29,33 @@ describe('POST /register', () => {
       .post('/register')
       .send({ email: 'example', password: 'password' });
     expect(res.statusCode).toEqual(400);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+});
+
+describe('POST /login', () => {
+  it('should return 200 OK for valid email and password with tokens in body and cookie', async () => {
+    const res = await request(app)
+      .post('/login')
+      .send({ email: 'example@example.com', password: 'password123S!' });
+    expect(res.body).toEqual(expect.any(String));
+    expect(res.headers['set-cookie']).toBeDefined();
+    expect(res.statusCode).toEqual(200);
+  });
+
+  it('should return 400 Bad request for invalid email and/or password', async () => {
+    const res = await request(app)
+      .post('/login')
+      .send({ email: 'example', password: 'password' });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+
+  it('should return 401 Unauthorized if there is no such user in db', async () => {
+    const res = await request(app)
+      .post('/login')
+      .send({ email: 'adada@gmail.com', password: 'password123S!' });
+    expect(res.statusCode).toEqual(401);
     expect(res.body.errors.length).toBeGreaterThan(0);
   });
 });
