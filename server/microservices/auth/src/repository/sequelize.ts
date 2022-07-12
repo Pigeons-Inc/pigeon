@@ -18,7 +18,6 @@ sequelize
     console.log(
       'Connection to auth database has been established successfully.'
     );
-    await sequelize.sync();
   })
   .catch((err) => {
     throw new Error('Unable to connect to the database:', err);

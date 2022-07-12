@@ -1,7 +1,9 @@
-import app from './app';
+import appPromise from './app';
 
 const port = process.env.PORT || 3001;
 
-app.listen(port, () => {
-  console.log(`Auth service is running at http://localhost:${port}`);
+appPromise.then((app) => {
+  app.listen(port, () => {
+    console.log(`Auth service is running at http://localhost:${port}`);
+  });
 });
