@@ -1,6 +1,7 @@
 import request from 'supertest';
 import db from '../repository/sequelize';
 import app from '../app';
+import User from '../models/sequelize/User';
 
 beforeAll(async () => {
   await db.sync();
@@ -11,7 +12,7 @@ describe('POST /register', () => {
     const res = await request(app)
       .post('/register')
       .send({ email: 'example@example.com', password: 'password123S!' });
-
+    console.log(res.body);
     expect(res.statusCode).toEqual(200);
   });
 
@@ -25,5 +26,8 @@ describe('POST /register', () => {
 });
 
 afterAll(async () => {
+  await User.destroy({
+    where: { email: 'example@example.com' },
+  });
   await db.close();
 });
