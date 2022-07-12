@@ -35,7 +35,7 @@ app.get('*', async (_req: Request, res: Response) => {
 });
 
 export default new Promise<Express>((resolve) => {
-  db.sync().then(() => {
+  db.sync({ logging: false }).then(() => {
     resolve(app);
   });
 });
