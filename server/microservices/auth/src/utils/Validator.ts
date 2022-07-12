@@ -15,7 +15,7 @@ export default class Validator {
     if (!password) this.errors.push('No password provided');
     if (password.length > 255) this.errors.push('Password is too long');
     if (password.length < 8) this.errors.push('Password is too short');
-    if (password.search(/[0-9]/) === -1)
+    if (password.search(/[\d]/) === -1)
       this.errors.push('Password must contain at least one number');
     if (password.search(/[a-z]/) === -1)
       this.errors.push('Password must contain at least one lowercase letter');
