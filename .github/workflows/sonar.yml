@@ -19,6 +19,10 @@ jobs:
         run: npm run build
       - name: Test and coverage
         run: npm run coverage
+        env:
+          PASSWORD_SALT: $2b$10$okwzWSE82ke7Y8H2.uAuuu
+          ACCESS_TOKEN_SECRET: 456
+          REFRESH_TOKEN_SECRET: 789
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
