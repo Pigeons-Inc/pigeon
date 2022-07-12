@@ -4,7 +4,7 @@ import app from '../src/app';
 import User from '../src/models/sequelize/User';
 
 beforeAll(async () => {
-  await db.sync();
+  await db.sync({ logging: false });
 });
 
 describe('POST /register', () => {
