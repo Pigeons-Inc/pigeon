@@ -4,12 +4,18 @@ import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import errorMiddleware from './middlewares/errorMiddleware';
 import { RegisterRoutes as registerRoutes } from './routes/routes';
+import checkAPISecretMiddleware from './middlewares/checkAPISecretMiddleware';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
-if (!process.env.PASSWORD_SALT) throw new Error('PASSWORD_SALT is not defined');
-if (!process.env.ACCESS_TOKEN_SECRET)
-  throw new Error('ACCESS_TOKEN_SECRET is not defined');
-if (!process.env.REFRESH_TOKEN_SECRET)
-  throw new Error('REFRESH_TOKEN_SECRET is not defined');
+if (!process.env.dev) {
+  if (!process.env.PASSWORD_SALT)
+    throw new Error('PASSWORD_SALT is not defined');
+  if (!process.env.ACCESS_TOKEN_SECRET)
+    throw new Error('ACCESS_TOKEN_SECRET is not defined');
+  if (!process.env.REFRESH_TOKEN_SECRET)
+    throw new Error('REFRESH_TOKEN_SECRET is not defined');
+  if (!process.env.API_SECRET)
+    throw new Error('process.env.API_SECRET is not defined');
+}
 
 const app: Express = express();
 app.disable('x-powered-by');
@@ -24,6 +30,7 @@ app.use(
     },
   })
 );
+app.use(checkAPISecretMiddleware);
 
 registerRoutes(app);
 

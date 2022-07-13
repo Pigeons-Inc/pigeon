@@ -1,6 +1,7 @@
+import bcrypt from 'bcrypt';
+import sequelize from '../repository/sequelize';
 import TokenService from './TokenService';
 import User from '../models/sequelize/User';
-import bcrypt from 'bcrypt';
 import ApiError from '../models/exceptions/ApiError';
 import UserDTO from '../models/interfaces/UserDTO';
 import TokenStore from '../models/sequelize/TokenStore';
@@ -17,7 +18,45 @@ export default class AuthService {
   public async register(email: string, password: string) {
     await this.validateCredentials(email, password);
     const hash = await bcrypt.hash(password, <string>process.env.PASSWORD_SALT);
-    const user = await User.create({ email, hash, isActivated: false });
+    const transaction = await sequelize.transaction();
+    const user = await User.create(
+      { email, hash, isActivated: false },
+      { transaction }
+    );
+    /**
+     * Unccomment this when email and profile services are ready
+     */
+    // try {
+    //   const { status: messageStatus } = await axios.post(
+    //     process.env.MAIL_SERVICE_ACTIVATION_URL ||
+    //       'http://localhost:3002/send?activation=true',
+    //     {
+    //       link: `${
+    //         process.env.GATEWAY_URL || 'http://localhost:3000'
+    //       }/auth/activate?id=${user.id}`,
+    //     },
+    //     {
+    //       headers: {
+    //         'api-secret': <string>process.env.API_SECRET,
+    //       },
+    //     }
+    //   );
+    //   if (messageStatus !== 200) throw new Error('Mail service issue');
+    //   const { status: profileStatus } = await axios.post(
+    //     process.env.PROFILE_SERVICE_URL || 'http://localhost:3003/profile',
+    //     { user },
+    //     {
+    //       headers: {
+    //         'api-secret': <string>process.env.API_SECRET,
+    //       },
+    //     }
+    //   );
+    //   if (profileStatus !== 200) throw new Error('Profile service issue');
+    // } catch (e) {
+    //   await transaction.rollback();
+    //   throw e;
+    // }
+    await transaction.commit();
     return this.tokenService.generateTokens(user);
   }
 

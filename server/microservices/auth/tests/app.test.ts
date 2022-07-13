@@ -5,6 +5,7 @@ import User from '../src/models/sequelize/User';
 import TokenStore from '../src/models/sequelize/TokenStore';
 
 beforeAll(async () => {
+  process.env.dev = 'true';
   await db.sync({ logging: false });
 });
 
