@@ -35,7 +35,7 @@ test('should work as expected for ValidationError', () => {
   expect(res.json).toHaveBeenCalledWith({
     message: err.message,
     errors: err.errors.map((error) => ({
-      name: 'Validation error: ' + error.path || '',
+      name: 'Validation error',
       message: error.message,
     })),
   });

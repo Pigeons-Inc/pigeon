@@ -23,7 +23,7 @@ export default (
     message = err.message;
     statusCode = 400;
     errors = err.errors.map((error) => ({
-      name: 'Validation error: ' + error.path || '',
+      name: 'Validation error',
       message: error.message,
     }));
   }
