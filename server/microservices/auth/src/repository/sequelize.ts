@@ -12,14 +12,4 @@ const sequelize = new Sequelize(databaseName, username, password, {
   sync: { alter: process.env.ALTER_SYNC === 'true' },
 });
 
-sequelize
-  .authenticate()
-  .then(async () => {
-    console.log(
-      'Connection to auth database has been established successfully.'
-    );
-  })
-  .catch((err) => {
-    throw new Error('Unable to connect to the database:' + err);
-  });
 export default sequelize;
