@@ -125,10 +125,10 @@ export class AuthController extends Controller {
     return accessToken;
   }
 
-  @Response<ErrorResponse>('400', 'Bad request')
   @Put('/activate')
   @SuccessResponse(200, 'OK')
+  @Response<ErrorResponse>('400', 'Bad request')
   public async activate(@Query() id: string) {
-    this.authService.activate(id);
+    await this.authService.activate(id);
   }
 }

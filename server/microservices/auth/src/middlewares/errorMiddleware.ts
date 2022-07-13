@@ -2,6 +2,7 @@ import ApiError from '../models/exceptions/ApiError';
 import { NextFunction, Request, Response } from 'express';
 import ErrorResponse from '../models/interfaces/ErrorResponse';
 import { ValidationError } from 'sequelize';
+import { ValidateError } from 'tsoa';
 
 export default (
   err: Error,
@@ -28,6 +29,15 @@ export default (
     }));
   }
 
+  if (err instanceof ValidateError) {
+    message = "Something's wrong with your request";
+    statusCode = 400;
+    errors = [
+      { name: 'Validation error', message: JSON.stringify(err.fields) },
+    ];
+  }
+
+  if (statusCode === 500) console.error(err);
   const errorResonse: ErrorResponse = { message, errors };
   res.status(statusCode).json(errorResonse);
 };

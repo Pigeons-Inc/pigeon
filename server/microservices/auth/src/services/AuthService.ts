@@ -58,7 +58,12 @@ export default class AuthService {
 
   public async activate(id: string) {
     if (!id) throw ApiError.badRequest('No id provided');
-    const user = await User.findOne({ where: { id } });
+    let user;
+    try {
+      user = await User.findOne({ where: { id } });
+    } catch {
+      throw ApiError.badRequest('Invalid id');
+    }
     if (!user) throw ApiError.badRequest('Invalid id');
     if (user.isActivated)
       throw ApiError.badRequest('User is already activated');
