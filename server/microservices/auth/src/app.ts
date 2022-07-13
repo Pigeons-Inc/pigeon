@@ -31,9 +31,7 @@ app.use(
   })
 );
 app.use(checkAPISecretMiddleware);
-
 registerRoutes(app);
-
 app.use(errorMiddleware);
 
 app.get('*', async (_req: Request, res: Response) => {

@@ -32,4 +32,11 @@ test('should work as expected for ValidationError', () => {
     throw new Error();
   });
   expect(res.status).toHaveBeenCalledWith(400);
+  expect(res.json).toHaveBeenCalledWith({
+    message: err.message,
+    errors: err.errors.map((error) => ({
+      name: 'Validation error: ' + error.path || '',
+      message: error.message,
+    })),
+  });
 });

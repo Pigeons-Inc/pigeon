@@ -5,14 +5,26 @@ import User from '../src/models/sequelize/User';
 import TokenStore from '../src/models/sequelize/TokenStore';
 
 beforeAll(async () => {
-  process.env.dev = 'true';
   await db.sync({ logging: false });
+});
+
+beforeEach(() => {
+  jest.resetModules();
+  process.env.dev = 'true';
 });
 
 describe('GET *', () => {
   it('should return 404 for /adadadad', async () => {
     const response = await request(app).get('/adadadad');
     expect(response.status).toBe(404);
+  });
+});
+
+describe('GET /validate without api-secret header', () => {
+  it('should return 403', async () => {
+    delete process.env.dev;
+    const res = await request(app).get('/validate');
+    expect(res.status).toBe(403);
   });
 });
 

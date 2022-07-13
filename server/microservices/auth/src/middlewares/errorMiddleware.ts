@@ -1,7 +1,6 @@
 import ApiError from '../models/exceptions/ApiError';
 import { NextFunction, Request, Response } from 'express';
 import ErrorResponse from '../models/interfaces/ErrorResponse';
-import { ValidateError } from 'tsoa';
 import { ValidationError } from 'sequelize';
 
 export default (
@@ -27,14 +26,6 @@ export default (
       name: 'Validation error: ' + error.path || '',
       message: error.message,
     }));
-  }
-
-  if (err instanceof ValidateError) {
-    message = "Something's wrong with your request";
-    statusCode = 400;
-    errors = [
-      { name: 'Validation error', message: JSON.stringify(err.fields) },
-    ];
   }
 
   if (statusCode === 500) console.error(err);

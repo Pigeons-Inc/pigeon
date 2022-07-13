@@ -24,4 +24,9 @@ describe('environment test', () => {
     process.env.REFRESH_TOKEN_SECRET = undefined;
     await expect(import('../src/app')).rejects.toBeInstanceOf(Error);
   });
+
+  it('should return error if API_SECRET is undefined', async () => {
+    process.env.API_SECRET = undefined;
+    await expect(import('../src/app')).rejects.toBeInstanceOf(Error);
+  });
 });
