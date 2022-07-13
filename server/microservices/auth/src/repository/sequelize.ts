@@ -10,6 +10,7 @@ const sequelize = new Sequelize(databaseName, username, password, {
   dialect: 'postgres',
   port: 5432,
   sync: { alter: process.env.ALTER_SYNC === 'true' },
+  logging: false,
 });
 
 export default sequelize;
