@@ -3,18 +3,17 @@ import {
   Post,
   Delete,
   Route,
-  Body,
   Header,
   Query,
   Controller,
   SuccessResponse,
   Put,
   Response,
+  BodyProp,
 } from 'tsoa';
 import AuthService from '../services/AuthService';
 import cookie from 'cookie';
 import ErrorResponse from '../models/interfaces/ErrorResponse';
-import BodyProps from '../models/interfaces/BodyProps';
 import PongResponse from '../models/interfaces/PongResponse';
 
 @Route('/')
@@ -32,8 +31,10 @@ export class AuthController extends Controller {
   @Post('/validateCredentials')
   @SuccessResponse(200, 'OK')
   @Response<ErrorResponse>('400', 'Bad request')
-  public async validateCredentials(@Body() body: BodyProps) {
-    const { email, password } = body;
+  public async validateCredentials(
+    @BodyProp() email = '',
+    @BodyProp() password = ''
+  ) {
     await this.authService.validateCredentials(email, password);
   }
 
@@ -42,8 +43,7 @@ export class AuthController extends Controller {
   @Response<ErrorResponse>('400', 'Bad request')
   @Response<ErrorResponse>('401', 'Unauthorized')
   @Response<ErrorResponse>('500', 'Unexpected error')
-  public async register(@Body() body: BodyProps) {
-    const { email, password } = body;
+  public async register(@BodyProp() email = '', @BodyProp() password = '') {
     const { accessToken, refreshToken } = await this.authService.register(
       email,
       password
@@ -64,8 +64,7 @@ export class AuthController extends Controller {
   @Response<ErrorResponse>('400', 'Bad request')
   @Response<ErrorResponse>('401', 'Unauthorized')
   @Response<ErrorResponse>('500', 'Unexpected error')
-  public async login(@Body() body: BodyProps) {
-    const { email, password } = body;
+  public async login(@BodyProp() email = '', @BodyProp() password = '') {
     const { accessToken, refreshToken } = await this.authService.login(
       email,
       password

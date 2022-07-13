@@ -28,7 +28,8 @@
           "Header",
           "Query",
           "SuccessResponse",
-          "Response"
+          "Response",
+          "BodyProp"
         ]
       }
     ],
