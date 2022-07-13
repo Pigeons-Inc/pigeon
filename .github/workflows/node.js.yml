@@ -49,3 +49,4 @@ jobs:
           ACCESS_TOKEN_SECRET: 456
           REFRESH_TOKEN_SECRET: 789
           API_SECRET: 12345678
+          AUTH_SERVICE_URL: http://localhost:3001/

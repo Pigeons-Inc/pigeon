@@ -5,8 +5,14 @@ import swaggerUi from 'swagger-ui-express';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-if (!process.env.API_SECRET)
-  throw new Error('process.env.API_SECRET is not defined');
+if (!process.env.dev) {
+  if (!process.env.API_SECRET)
+    throw new Error('process.env.API_SECRET is not defined');
+
+  if (!process.env.AUTH_SERVICE_URL) {
+    throw new Error('process.env.AUTH_SERVICE_URL is not defined');
+  }
+}
 
 const app: Express = express();
 app.disable('x-powered-by');
