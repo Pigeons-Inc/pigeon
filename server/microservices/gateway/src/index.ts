@@ -4,7 +4,6 @@ import proxy from 'express-http-proxy';
 import swaggerUi from 'swagger-ui-express';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
-import errorMiddleware from './middlewares/errorMiddleware';
 
 const app: Express = express();
 app.disable('x-powered-by');
@@ -26,7 +25,6 @@ app.use(
     },
   })
 );
-app.use(errorMiddleware);
 
 app.get('/ping', async (_req: Request, res: Response) => {
   res.json({ message: 'pong' });
