@@ -8,6 +8,13 @@ beforeAll(async () => {
   await db.sync({ logging: false });
 });
 
+describe('GET *', () => {
+  it('should return 404 for /adadadad', async () => {
+    const response = await request(app).get('/adadadad');
+    expect(response.status).toBe(404);
+  });
+});
+
 describe('GET /ping', () => {
   it('should return 200', async () => {
     const res = await request(app).get('/ping');
@@ -23,12 +30,49 @@ describe('POST /validateCredentials', () => {
     expect(res.statusCode).toEqual(200);
   });
 
-  it('should return 400 Bad request for invalid email and/or password', async () => {
+  it('should return 400 Bad request for invalid email or password', async () => {
     const res = await request(app)
       .post('/validateCredentials')
       .send({ email: 'example', password: 'password' });
     expect(res.statusCode).toEqual(400);
     expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+
+  it('should return 400 Bad request if no email or password provided', async () => {
+    const res = await request(app).post('/validateCredentials');
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+
+  it('should return 400 Bad request if email or password is too long', async () => {
+    const res = await request(app)
+      .post('/validateCredentials')
+      .send({ email: 'a'.repeat(256), password: 'a'.repeat(256) });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+
+  it('should return 400 Bad request if password is too short', async () => {
+    const res = await request(app)
+      .post('/validateCredentials')
+      .send({ email: 'example@example.com', password: 'a'.repeat(7) });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+
+  it("should return 400 Bad request if password doesn't contain lowercase letter", async () => {
+    const res = await request(app)
+      .post('/validateCredentials')
+      .send({ email: 'example@example.com', password: 'PASSWORD123S!' });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+
+  it('should return 400 Bad request if password has spaces', async () => {
+    const res = await request(app)
+      .post('/validateCredentials')
+      .send({ email: 'example@example.com', password: 'password 123S!' });
+    expect(res.statusCode).toEqual(400);
   });
 });
 
@@ -128,6 +172,24 @@ describe('GET /validate', () => {
       .get('/validate')
       .set('authorization', `Bearer ${token}123`);
     expect(res.statusCode).toEqual(401);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+
+  it('should return 401 Unathorized if token is not provided', async () => {
+    const res = await request(app).get('/validate');
+    expect(res.statusCode).toEqual(401);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+
+  it('should return 401 Unauthorized if user is not in db', async () => {
+    const res = await request(app)
+      .get('/validate')
+      .set(
+        'authorization',
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdlZGVhMDAxLWM4ZWEtNDFiYy04N2FkLTg2MjNmZTVkZWZlOCIsImVtYWlsIjoiYWRhZGFkYWRAZ21haWwuY29tIiwiaGFzaCI6ImFkYWRhZGFkYSIsImlzQWN0aXZhdGVkIjp0cnVlfQ.CRqGoa3We18tjrXekANX70JrBekBr78aVPiuixx_pV0'
+      );
+    expect(res.statusCode).toEqual(401);
+    expect(res.body.errors.length).toBeGreaterThan(0);
   });
 });
 
@@ -179,6 +241,14 @@ describe('PUT /activate', () => {
 
   it('should return 400 Bad request if id is not valid', async () => {
     const res = await request(app).put('/activate?id=123');
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.errors.length).toBeGreaterThan(0);
+  });
+
+  it('should return 400 Bad request if user is not in db', async () => {
+    const res = await request(app).put(
+      '/activate?id=7edea001-c8ea-41bc-87ad-8623fe5defe8'
+    );
     expect(res.statusCode).toEqual(400);
     expect(res.body.errors.length).toBeGreaterThan(0);
   });

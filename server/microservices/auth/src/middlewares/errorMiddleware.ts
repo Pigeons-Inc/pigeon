@@ -1,8 +1,8 @@
 import ApiError from '../models/exceptions/ApiError';
 import { NextFunction, Request, Response } from 'express';
 import ErrorResponse from '../models/interfaces/ErrorResponse';
-import { ValidationError } from 'sequelize';
 import { ValidateError } from 'tsoa';
+import { ValidationError } from 'sequelize';
 
 export default (
   err: Error,

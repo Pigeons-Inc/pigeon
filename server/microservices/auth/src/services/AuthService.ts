@@ -64,7 +64,7 @@ export default class AuthService {
     } catch {
       throw ApiError.badRequest('Invalid id');
     }
-    if (!user) throw ApiError.badRequest('Invalid id');
+    if (!user) throw ApiError.badRequest('User is not in DB');
     if (user.isActivated)
       throw ApiError.badRequest('User is already activated');
     await user.update({ isActivated: true });
