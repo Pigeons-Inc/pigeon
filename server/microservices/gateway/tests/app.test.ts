@@ -39,9 +39,9 @@ describe('GET /api/*', () => {
             expect(res.status).toBe(401);
             resolve();
           });
-      }, 5000);
+      }, 3000);
     });
-  }, 10000);
+  });
 
   it('should be OK with /api/auth', async () => {
     const res = await request(app).get('/api/auth');
@@ -61,7 +61,6 @@ describe('GET /api/*', () => {
     const res = await request(app)
       .get('/api/asdadads')
       .set('authorization', `Bearer ${accessToken}`);
-    expect(res.status).toBe(404);
 
     TokenStore.destroy({ where: { id: user?.id } });
     user?.destroy();
@@ -74,5 +73,7 @@ describe('GET /api/*', () => {
         }
       }, 1000);
     });
+    await sequelize.close();
+    expect(res.status).toBe(404);
   });
 });

@@ -7,8 +7,8 @@
     "start": "node index.js",
     "dev": "concurrently \"node buildMicroservices.js -d\" \"nodemon index.js\"",
     "build": "node buildMicroservices.js",
-    "test": "jest",
-    "coverage": "jest --coverage"
+    "test": "jest -i",
+    "coverage": "jest -i --coverage"
   },
   "keywords": [],
   "author": "",
