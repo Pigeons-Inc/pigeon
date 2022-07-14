@@ -39,9 +39,9 @@ describe('GET /api/*', () => {
             expect(res.status).toBe(401);
             resolve();
           });
-      }, 3000);
+      }, 5000);
     });
-  });
+  }, 10000);
 
   it('should be OK with /api/auth', async () => {
     const res = await request(app).get('/api/auth');
