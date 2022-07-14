@@ -3,8 +3,10 @@ import path from 'path';
 import proxy from 'express-http-proxy';
 import swaggerUi from 'swagger-ui-express';
 import * as dotenv from 'dotenv';
-import axios, { AxiosError } from 'axios';
+import { request } from 'undici';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+const authServiceURL = process.env.AUTH_SERVICE_URL || 'http://localhost:3001';
 
 if (!process.env.dev) {
   if (!process.env.API_SECRET)
@@ -32,33 +34,25 @@ app.use('/api', (req, _res, next) => {
   req.headers['api-secret'] = process.env.API_SECRET;
   next();
 });
-app.use(
-  '/api/auth',
-  proxy(process.env.AUTH_SERVICE_URL || 'http://localhost:3001')
-);
+app.use('/api/auth', proxy(authServiceURL));
 app.use('/api/*', async (req, res, next) => {
   try {
-    const { data, status } = await axios.get(
-      (process.env.AUTH_SERVICE_URL || 'http://localhost:3001') + '/validate',
-      {
-        headers: {
-          authorization: req.headers.authorization || '',
-          'api-secret': <string>process.env.API_SECRET,
-        },
-      }
-    );
+    const { statusCode, body } = await request(authServiceURL + '/validate', {
+      headers: {
+        authorization: req.headers.authorization || '',
+        'api-secret': req.headers['api-secret'],
+      },
+      method: 'GET',
+    });
 
-    if (status !== 200) {
-      res.status(status).send(data);
+    if (statusCode === 200) {
+      next();
       return;
     }
-    next();
-  } catch (err) {
-    if (err instanceof AxiosError) {
-      res.status(err.response?.status || 500).send(err.response?.data);
-      return;
-    }
-    res.status(500).json(err);
+    res.status(statusCode).json(await body.json());
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: 'Unexpected error', errors: [e] });
   }
 });
 
