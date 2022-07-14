@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import { Response, Request, NextFunction } from 'express';
 
 export default (req: Request, res: Response, next: NextFunction) => {

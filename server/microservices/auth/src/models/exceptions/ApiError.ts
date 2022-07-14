@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 type ErrorsCreationParam = Error[] | Error | string | string[];
 export default class ApiError extends Error {
   public code: number;

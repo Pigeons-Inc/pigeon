@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import ApiError from '../src/models/exceptions/ApiError';
 
 test('should work fine with Error', (done) => {

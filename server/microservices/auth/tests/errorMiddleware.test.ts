@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import { request } from 'express';
 import { ValidationError } from 'sequelize';
 import errorMiddleware from '../src/middlewares/errorMiddleware';

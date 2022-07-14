@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import { AuthController } from '../src/controllers/AuthController';
 
 describe('AuthController', () => {

@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import express, { Express, Request, Response } from 'express';
 import * as dotenv from 'dotenv';
 import path from 'path';

@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import ApiError from '../models/exceptions/ApiError';
 import { NextFunction, Request, Response } from 'express';
 import ErrorResponse from '../models/interfaces/ErrorResponse';

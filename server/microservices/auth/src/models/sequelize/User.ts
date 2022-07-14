@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import { DataTypes } from 'sequelize';
 import IUser from '../interfaces/User';
 import db from '../../repository/sequelize';

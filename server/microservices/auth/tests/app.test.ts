@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import request from 'supertest';
 import db from '../src/repository/sequelize';
 import app from '../src/app';

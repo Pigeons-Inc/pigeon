@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import ApiError from '../models/exceptions/ApiError';
 
 export default class Validator {

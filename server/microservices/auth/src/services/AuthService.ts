@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import bcrypt from 'bcrypt';
 // Unccomment this when email and profile services are ready
 // import { request } from 'undici';

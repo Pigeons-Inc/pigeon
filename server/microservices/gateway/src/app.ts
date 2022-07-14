@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import express, { Express, Request, Response } from 'express';
 import path from 'path';
 import proxy from 'express-http-proxy';

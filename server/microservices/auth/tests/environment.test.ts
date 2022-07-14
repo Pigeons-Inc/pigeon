@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 describe('environment test', () => {
   const OLD_ENV = process.env;
 

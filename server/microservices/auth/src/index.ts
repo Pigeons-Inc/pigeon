@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import db from './repository/sequelize';
 import app from './app';
 import { Server } from 'http';

@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import Tokens from '../models/Tokens';
 import * as jwt from 'jsonwebtoken';
 import TokenStore from '../models/sequelize/TokenStore';

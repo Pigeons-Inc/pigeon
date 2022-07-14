@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import app from './app';
 import * as dotenv from 'dotenv';
 import path from 'path';

@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 const { workDir, microservices } = require('./microservices.config.json');
 const { exec, execSync } = require('child_process');
 const path = require('path');

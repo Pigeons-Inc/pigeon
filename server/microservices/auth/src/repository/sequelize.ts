@@ -1,3 +1,7 @@
+/**
+ * @author Eugene Pashkovsky <pashkovskiy.eugen@gmail.com>
+ */
+
 import * as dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
 import path from 'path';
