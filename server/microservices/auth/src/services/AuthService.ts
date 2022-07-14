@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+// Unccomment this when email and profile services are ready
+// import { request } from 'undici';
 import sequelize from '../repository/sequelize';
 import TokenService from './TokenService';
 import User from '../models/sequelize/User';
@@ -27,31 +29,35 @@ export default class AuthService {
      * Unccomment this when email and profile services are ready
      */
     // try {
-    //   const { status: messageStatus } = await axios.post(
+    //   const { statusCode: messageStatus } = await request(
     //     process.env.MAIL_SERVICE_ACTIVATION_URL ||
     //       'http://localhost:3002/send?activation=true',
     //     {
-    //       link: `${
-    //         process.env.GATEWAY_URL || 'http://localhost:3000'
-    //       }/auth/activate?id=${user.id}`,
-    //     },
-    //     {
+    //       method: 'POST',
+    //       body: JSON.stringify({
+    //         link: `${
+    //           process.env.GATEWAY_URL || 'http://localhost:3000'
+    //         }/auth/activate?id=${user.id}`,
+    //       }),
     //       headers: {
+    //         'Content-Type': 'application/json',
     //         'api-secret': <string>process.env.API_SECRET,
     //       },
     //     }
     //   );
     //   if (messageStatus !== 200) throw new Error('Mail service issue');
-    //   const { status: profileStatus } = await axios.post(
+    //   const { statusCode: profileStatus } = await request(
     //     process.env.PROFILE_SERVICE_URL || 'http://localhost:3003/profile',
-    //     { user },
     //     {
+    //       method: 'POST',
+    //       body: JSON.stringify(user),
     //       headers: {
+    //         'Content-Type': 'application/json',
     //         'api-secret': <string>process.env.API_SECRET,
     //       },
     //     }
     //   );
-    //   if (profileStatus !== 200) throw new Error('Profile service issue');
+    //   if (profileStatus !== 201) throw new Error('Profile service issue');
     // } catch (e) {
     //   await transaction.rollback();
     //   throw e;
