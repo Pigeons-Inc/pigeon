@@ -9,7 +9,6 @@ const port = process.env.PORT || 3000;
 if (+process.version.split('.')[0] < 16)
   throw new Error('Node version >= 16.x is required');
 if (cluster.isPrimary) {
-  console.log();
   console.log(`API gateway is running at http://localhost:${port}`);
   console.log(`Starting gateway primary process: ${process.pid}`);
   for (let i = 0; i < os.cpus().length - 1; i++) {
