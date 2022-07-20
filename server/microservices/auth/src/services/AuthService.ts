@@ -12,6 +12,7 @@ import ApiError from '../models/exceptions/ApiError';
 import UserDTO from '../models/interfaces/UserDTO';
 import TokenStore from '../models/sequelize/TokenStore';
 import Validator from '../utils/Validator';
+import { request } from 'undici';
 
 export default class AuthService {
   private tokenService: TokenService = new TokenService();
@@ -35,13 +36,14 @@ export default class AuthService {
     // try {
     //   const { statusCode: messageStatus } = await request(
     //     process.env.MAIL_SERVICE_ACTIVATION_URL ||
-    //       'http://localhost:3002/send?activation=true',
+    //       'http://localhost:3002/send/activation',
     //     {
     //       method: 'POST',
     //       body: JSON.stringify({
     //         link: `${
     //           process.env.GATEWAY_URL || 'http://localhost:3000'
-    //         }/auth/activate?id=${user.id}`,
+    //         }/api/auth/activate?id=${user.id}`,
+    //         sendTo: user.email,
     //       }),
     //       headers: {
     //         'Content-Type': 'application/json',
@@ -50,22 +52,22 @@ export default class AuthService {
     //     }
     //   );
     //   if (messageStatus !== 200) throw new Error('Mail service issue');
-    //   const { statusCode: profileStatus } = await request(
-    //     process.env.PROFILE_SERVICE_URL || 'http://localhost:3003/profile',
-    //     {
-    //       method: 'POST',
-    //       body: JSON.stringify(user),
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'api-secret': <string>process.env.API_SECRET,
-    //       },
-    //     }
-    //   );
-    //   if (profileStatus !== 201) throw new Error('Profile service issue');
-    // } catch (e) {
-    //   await transaction.rollback();
-    //   throw e;
-    // }
+    // const { statusCode: profileStatus } = await request(
+    //   process.env.PROFILE_SERVICE_URL || 'http://localhost:3003/profile',
+    //   {
+    //     method: 'POST',
+    //     body: JSON.stringify(user),
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'api-secret': <string>process.env.API_SECRET,
+    //     },
+    //   }
+    // );
+    // if (profileStatus !== 201) throw new Error('Profile service issue');
+    } catch (e) {
+      await transaction.rollback();
+      throw e;
+    }
     await transaction.commit();
     return this.tokenService.generateTokens(user);
   }

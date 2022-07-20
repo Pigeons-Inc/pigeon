@@ -4,7 +4,7 @@ import swaggerUi from 'swagger-ui-express';
 import * as dotenv from 'dotenv';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 import errorMiddleware from './middlewares/errorMiddleware';
-// import { RegisterRoutes as registerRoutes } from './routes/routes';
+import { RegisterRoutes as registerRoutes } from './routes/routes';
 import checkAPISecretMiddleware from './middlewares/checkAPISecretMiddleware';
 
 if (!process.env.dev && !process.env.API_SECRET)
@@ -25,7 +25,7 @@ app.use(
 );
 
 app.use(checkAPISecretMiddleware);
-//registerRoutes(app);
+registerRoutes(app);
 app.use(errorMiddleware);
 
 app.get('*', (_req: Request, res: Response) => {

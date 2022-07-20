@@ -11,7 +11,6 @@ import {
   Query,
   Controller,
   SuccessResponse,
-  Put,
   Response,
   BodyProp,
 } from 'tsoa';
@@ -128,7 +127,7 @@ export class AuthController extends Controller {
     return accessToken;
   }
 
-  @Put('/activate')
+  @Get('/activate')
   @SuccessResponse(200, 'OK')
   @Response<ErrorResponse>('400', 'Bad request')
   public async activate(@Query() id = '') {
