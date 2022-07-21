@@ -21,7 +21,23 @@ export default class SendService {
       html: `
         <div>
           <h1>To activate your account follow the link</h1>
-          <a href="${dto.link}">${dto.link}</a>
+          <a href="${dto.link}">Activate</a>
+        </div>
+      `,
+    });
+  }
+
+  public async passwordReset(dto: SendActivationDto) {
+    await this.transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: dto.sendTo,
+      subject: 'Password reset for Pigeon',
+      text: '',
+      html: `
+        <div>
+          <h1>Did you request a password for Pigeon?</h1>
+          <a href="${dto.link}?confirmed=true">Reset</a>
+          <a href="${dto.link}?confirmed=false">Wasn't me!</a>
         </div>
       `,
     });
