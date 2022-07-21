@@ -3,7 +3,7 @@ import ErrorResponse from '../interfaces/ErrorResponse';
 import SendActivationDto from '../interfaces/SendActivationDto';
 import SendService from '../services/SendService';
 
-@Route('send')
+@Route()
 export class SendController extends Controller {
   private sendService: SendService = new SendService();
 

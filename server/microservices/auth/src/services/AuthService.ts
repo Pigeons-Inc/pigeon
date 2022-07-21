@@ -35,7 +35,7 @@ export default class AuthService {
     // try {
     //   const { statusCode: messageStatus } = await request(
     //     process.env.MAIL_SERVICE_ACTIVATION_URL ||
-    //       'http://localhost:3002/send/activation',
+    //       'http://localhost:3002/activation',
     //     {
     //       method: 'POST',
     //       body: JSON.stringify({
