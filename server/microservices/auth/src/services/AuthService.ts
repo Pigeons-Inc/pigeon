@@ -12,7 +12,6 @@ import ApiError from '../models/exceptions/ApiError';
 import UserDTO from '../models/interfaces/UserDTO';
 import TokenStore from '../models/sequelize/TokenStore';
 import Validator from '../utils/Validator';
-import { request } from 'undici';
 
 export default class AuthService {
   private tokenService: TokenService = new TokenService();
@@ -64,10 +63,10 @@ export default class AuthService {
     //   }
     // );
     // if (profileStatus !== 201) throw new Error('Profile service issue');
-    } catch (e) {
-      await transaction.rollback();
-      throw e;
-    }
+    // } catch (e) {
+    //   await transaction.rollback();
+    //   throw e;
+    // }
     await transaction.commit();
     return this.tokenService.generateTokens(user);
   }
