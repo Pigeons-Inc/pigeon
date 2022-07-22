@@ -15,13 +15,13 @@ export class SendController extends Controller {
   @SuccessResponse(200, 'OK')
   @Response<ErrorResponse>('400', 'Bad request')
   public async sendActivation(@Body() dto: SendActivationDto) {
-    await this.sendService.activation(dto);
+    return this.sendService.activation(dto);
   }
 
   @Post('/reset')
   @SuccessResponse(200, 'OK')
   @Response<ErrorResponse>('400', 'Bad request')
   public async sendPasswordReset(@Body() dto: SendActivationDto) {
-    await this.sendService.passwordReset(dto);
+    return this.sendService.passwordReset(dto);
   }
 }
