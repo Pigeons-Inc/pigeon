@@ -10,8 +10,6 @@ import * as dotenv from 'dotenv';
 import { request } from 'undici';
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const authServiceURL = process.env.AUTH_SERVICE_URL || 'http://localhost:3001';
-
 if (!process.env.dev) {
   if (!process.env.API_SECRET)
     throw new Error('process.env.API_SECRET is not defined');
@@ -20,6 +18,7 @@ if (!process.env.dev) {
     throw new Error('process.env.AUTH_SERVICE_URL is not defined');
   }
 }
+const authServiceURL = process.env.AUTH_SERVICE_URL || 'http://localhost:3001';
 
 const app: Express = express();
 app.disable('x-powered-by');

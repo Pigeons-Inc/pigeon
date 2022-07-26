@@ -236,7 +236,7 @@ describe('GET /refresh', () => {
 });
 
 let id: string;
-describe('PUT /activate', () => {
+describe('GET /activate/{id}', () => {
   it('should return 200 OK for valid id', async () => {
     await User.update(
       { isActivated: false },
@@ -245,33 +245,27 @@ describe('PUT /activate', () => {
     const user = await User.findOne({
       where: { email: 'example@example.com' },
     });
-    id = user?.id || '';
-    const res = await request(app).put(`/activate?id=${id}`);
+    id = user?.activationId || '';
+    const res = await request(app).get(`/activate/${id}`);
     expect(res.statusCode).toEqual(200);
   });
 
-  it('should return 400 Bad request if id is not provided', async () => {
-    const res = await request(app).put('/activate');
-    expect(res.statusCode).toEqual(400);
-    expect(res.body.errors.length).toBeGreaterThan(0);
-  });
-
   it('should return 400 Bad request if id is not valid', async () => {
-    const res = await request(app).put('/activate?id=123');
+    const res = await request(app).get('/activate/123');
     expect(res.statusCode).toEqual(400);
     expect(res.body.errors.length).toBeGreaterThan(0);
   });
 
   it('should return 400 Bad request if user is not in db', async () => {
-    const res = await request(app).put(
-      '/activate?id=7edea001-c8ea-41bc-87ad-8623fe5defe8'
+    const res = await request(app).get(
+      '/activate/7edea001-c8ea-41bc-87ad-8623fe5defe8'
     );
     expect(res.statusCode).toEqual(400);
     expect(res.body.errors.length).toBeGreaterThan(0);
   });
 
   it('should return 400 Bad request if user is already activated', async () => {
-    const res = await request(app).put(`/activate?id=${id}`);
+    const res = await request(app).get(`/activate/${id}`);
     expect(res.statusCode).toEqual(400);
     expect(res.body.errors.length).toBeGreaterThan(0);
   });
