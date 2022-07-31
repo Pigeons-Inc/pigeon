@@ -29,7 +29,8 @@
           "Query",
           "SuccessResponse",
           "Response",
-          "BodyProp"
+          "BodyProp",
+          "Path"
         ]
       }
     ],

@@ -3,8 +3,9 @@
  */
 
 export default interface UserDTO {
-  id: string;
-  email: string;
-  hash: string;
-  isActivated: boolean;
+  readonly id: string;
+  readonly email: string;
+  readonly hash: string;
+  readonly isActivated: boolean;
+  readonly activationId: string;
 }

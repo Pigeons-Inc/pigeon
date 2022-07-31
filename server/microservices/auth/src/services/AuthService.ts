@@ -23,12 +23,11 @@ export default class AuthService {
 
   public async register(email: string, password: string) {
     await this.validateCredentials(email, password);
+    if (await User.findOne({ where: { email } }))
+      throw ApiError.badRequest('User with this email already exists');
     const hash = await bcrypt.hash(password, <string>process.env.PASSWORD_SALT);
     const transaction = await sequelize.transaction();
-    const user = await User.create(
-      { email, hash, isActivated: false },
-      { transaction }
-    );
+    const user = await User.create({ email, hash }, { transaction });
     /**
      * Unccomment this when email and profile services are ready
      */
@@ -41,8 +40,7 @@ export default class AuthService {
     //       body: JSON.stringify({
     //         link: `${
     //           process.env.GATEWAY_URL || 'http://localhost:3000'
-    //         }/api/auth/activate?id=${user.id}`,
-    //         sendTo: user.email,
+    //         }/auth/activate/${user.activationId}`,
     //       }),
     //       headers: {
     //         'Content-Type': 'application/json',
@@ -106,11 +104,11 @@ export default class AuthService {
     return this.tokenService.generateTokens(decoded);
   }
 
-  public async activate(id: string) {
-    if (!id) throw ApiError.badRequest('No id provided');
+  public async activate(activationId: string) {
+    if (!activationId) throw ApiError.badRequest('No id provided');
     let user;
     try {
-      user = await User.findOne({ where: { id } });
+      user = await User.findOne({ where: { activationId } });
     } catch {
       throw ApiError.badRequest('Invalid id');
     }

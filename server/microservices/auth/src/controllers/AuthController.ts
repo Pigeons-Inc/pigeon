@@ -8,11 +8,11 @@ import {
   Delete,
   Route,
   Header,
-  Query,
   Controller,
   SuccessResponse,
   Response,
   BodyProp,
+  Path,
 } from 'tsoa';
 import AuthService from '../services/AuthService';
 import cookie from 'cookie';
@@ -127,10 +127,10 @@ export class AuthController extends Controller {
     return accessToken;
   }
 
-  @Get('/activate')
+  @Get('/activate/{id}')
   @SuccessResponse(200, 'OK')
   @Response<ErrorResponse>('400', 'Bad request')
-  public async activate(@Query() id = '') {
+  public async activate(@Path() id = '') {
     await this.authService.activate(id);
   }
 }

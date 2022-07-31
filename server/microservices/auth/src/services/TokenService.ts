@@ -26,9 +26,11 @@ export default class TokenService {
       }
     );
 
-    const finded = await TokenStore.findOne({ where: { id: user.id } });
-    if (finded) {
-      await finded.update({ token: refreshToken });
+    const foundTokenStore = await TokenStore.findOne({
+      where: { id: user.id },
+    });
+    if (foundTokenStore) {
+      await foundTokenStore.update({ token: refreshToken });
     } else {
       await TokenStore.create({ id: user.id, token: refreshToken });
     }

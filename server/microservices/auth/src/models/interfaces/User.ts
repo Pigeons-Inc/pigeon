@@ -14,5 +14,6 @@ export default interface User
   id: CreationOptional<string>;
   email: string;
   hash: string;
-  isActivated: boolean;
+  isActivated: CreationOptional<boolean>;
+  activationId: CreationOptional<string>;
 }
