@@ -13,6 +13,27 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
-    "new-cap": ["error", { "capIsNewExceptions": ["Get", "Route"] }]
+    "new-cap": [
+      "error",
+      {
+        "capIsNewExceptions": [
+          "Get",
+          "Post",
+          "Delete",
+          "Put",
+          "Patch",
+          "Head",
+          "Route",
+          "Body",
+          "Header",
+          "Query",
+          "SuccessResponse",
+          "Response",
+          "BodyProp",
+          "Path"
+        ]
+      }
+    ],
+    "class-methods-use-this": 0
   }
 }

@@ -9,10 +9,39 @@ jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Test and coverage
+        run: npm run coverage
+        env:
+          PASSWORD_SALT: $2b$10$okwzWSE82ke7Y8H2.uAuuu
+          ACCESS_TOKEN_SECRET: 456
+          REFRESH_TOKEN_SECRET: 789
+          API_SECRET: 12345678
+          AUTH_SERVICE_URL: http://localhost:3001/
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
