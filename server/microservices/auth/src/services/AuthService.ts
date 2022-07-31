@@ -34,7 +34,7 @@ export default class AuthService {
     // try {
     //   const { statusCode: messageStatus } = await request(
     //     process.env.MAIL_SERVICE_ACTIVATION_URL ||
-    //       'http://localhost:3002/send?activation=true',
+    //       'http://localhost:3002/activation',
     //     {
     //       method: 'POST',
     //       body: JSON.stringify({
@@ -49,18 +49,18 @@ export default class AuthService {
     //     }
     //   );
     //   if (messageStatus !== 200) throw new Error('Mail service issue');
-    //   const { statusCode: profileStatus } = await request(
-    //     process.env.PROFILE_SERVICE_URL || 'http://localhost:3003/profile',
-    //     {
-    //       method: 'POST',
-    //       body: JSON.stringify(user),
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //         'api-secret': <string>process.env.API_SECRET,
-    //       },
-    //     }
-    //   );
-    //   if (profileStatus !== 201) throw new Error('Profile service issue');
+    // const { statusCode: profileStatus } = await request(
+    //   process.env.PROFILE_SERVICE_URL || 'http://localhost:3003/profile',
+    //   {
+    //     method: 'POST',
+    //     body: JSON.stringify(user),
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'api-secret': <string>process.env.API_SECRET,
+    //     },
+    //   }
+    // );
+    // if (profileStatus !== 201) throw new Error('Profile service issue');
     // } catch (e) {
     //   await transaction.rollback();
     //   throw e;
